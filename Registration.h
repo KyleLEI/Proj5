@@ -42,5 +42,6 @@ public:
     Node<Registration>* findRegistrationNode(const std::string stu_id, const std::string course_code);
     bool removeRegistration(const std::string stu_id, const std::string course_code);
     bool removeRegistrationNode(Node<Registration>*);
+    bool queryRegistration(const std::string stu_id, const std::string course_code);
 };
 #endif /* Registration_h */

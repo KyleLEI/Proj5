@@ -7,12 +7,36 @@
 //
 
 #include "DataManager.h"
-
+#include <cstdlib>
 #include <cstdio>
 #include <iostream>
 using namespace std;
 
-int DataManager::exec(){return 0;}
+int DataManager::exec(){
+    while(true){
+        displayMainMenu();
+        int choice;
+        readInput(choice);
+        while(!verifyChoice(choice, 6)){
+            cout<<"Invalid input, re-enter again (1-6): ";
+            readInput(choice);
+        }
+        switch(choice){
+            case 1:
+                displayStudentMenu();
+                break;
+            case 2:
+                displayCourseMenu();
+                break;
+            case 3:
+                displayRegMenu();
+                break;
+            case 6:
+                return 0;
+        }
+    }
+    return 0;
+}
 
 char DataManager::charGender(Student::Gender g){
     if(g==Student::Male) return 'M';
@@ -64,6 +88,10 @@ bool DataManager::verifyMark(const double in_mark){
     return in_mark>=0&&in_mark<=100;
 }
 
+bool DataManager::verifyChoice(const int in,const int range){
+    return in>=1&&in<=range;
+}
+
 void DataManager::waitForEnter(){
     cout<<"Press ENTER to continue...";
     char c;
@@ -81,6 +109,7 @@ bool DataManager::readInput(std::string& container){
 }
 
 bool DataManager::readInput(int& container){
+    container=0;
     string tmp;
     char c;
     cin.get(c);
@@ -90,4 +119,31 @@ bool DataManager::readInput(int& container){
     const char* ctmp=tmp.c_str();
     sscanf(ctmp, "%d",&container);
     return false;
+}
+
+bool DataManager::readInput(double& container){
+    container=0;
+    string tmp;
+    char c;
+    cin.get(c);
+    if(c=='\n') return true;
+    tmp.push_back(c);
+    while(cin.get(c)&&c!='\n') tmp.push_back(c);
+    const char* ctmp=tmp.c_str();
+    sscanf(ctmp, "%lf",&container);
+    return false;
+}
+
+void DataManager::displayMainMenu(){
+    system("clear");
+    cout<<endl;
+    cout<<"HKUST Course Registration System\n"
+    <<"--------------------------------\n"<<endl
+    <<"1. Student Management\n"
+    <<"2. Course Management\n"
+    <<"3. Course Registration\n"
+    <<"4. Report Management\n"
+    <<"5. File Management\n"
+    <<"6. Exit\n"<<endl
+    <<"Enter your choice (1-6): ";
 }

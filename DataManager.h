@@ -21,6 +21,7 @@ public:
     DataManager(){};
     int exec();
 public:
+    void displayMainMenu();
     void displayStudentMenu();
     void displayCourseMenu();
     void displayRegMenu();
@@ -31,6 +32,7 @@ public:
     
     void modifyStudent();
     void modifyCourse();
+    void modifyMark();
     
     void queryStudent();
     void queryCourse();
@@ -39,8 +41,6 @@ public:
     void deleteStudent();
     void deleteCourse();
     void deleteReg();
-    
-    void modifyMark();
     
 private:
     static inline bool isDigit(const char input){return input>='0'&&input<='9';}//ASCII
@@ -53,6 +53,7 @@ private:
     static bool verifyCourseName(const std::string);
     static bool verifyCredit(const int);
     static bool verifyMark(const double);
+    static bool verifyChoice(const int,const int);
     
     static char charGender(Student::Gender);
     static std::string strGender(Student::Gender);
@@ -60,6 +61,7 @@ private:
     static void waitForEnter();
     static bool readInput(std::string&);//returns true if only '\n' is input
     static bool readInput(int&);
+    static bool readInput(double&);
 };
 
 #endif /* DataManager_h */

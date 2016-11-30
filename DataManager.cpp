@@ -13,6 +13,7 @@ using namespace std;
 
 void DataManager::displayStudentMenu(){
     system("clear");
+    cout<<endl;
     cout<<"HKUST Course Registration System  (Student Menu)\n"
     <<"------------------------------------------------\n"<<endl
     <<"1. Insert Student Record\n"
@@ -21,6 +22,33 @@ void DataManager::displayStudentMenu(){
     <<"4. Query Student Record\n"
     <<"5. Go back to main menu\n"<<endl
     <<"Enter your choice (1-5): ";
+    
+    int choice;
+    readInput(choice);
+    while(!verifyChoice(choice, 5)){
+        cout<<"Invalid input, re-enter again (1-5): ";
+        readInput(choice);
+    }
+    switch (choice) {
+        case 1:
+            insertStudent();
+            break;
+            
+        case 2:
+            modifyStudent();
+            break;
+            
+        case 3:
+            deleteStudent();
+            break;
+            
+        case 4:
+            queryStudent();
+            break;
+            
+        case 5:
+            break;
+    }
 }
 
 void DataManager::insertStudent(){
@@ -175,6 +203,7 @@ void DataManager::deleteStudent(){
 
 void DataManager::displayCourseMenu(){
     system("clear");
+    cout<<endl;
     cout<<"HKUST Course Registration System  (Course Menu)\n"
     <<"-----------------------------------------------\n"<<endl
     <<"1. Insert Course Record\n"
@@ -183,6 +212,33 @@ void DataManager::displayCourseMenu(){
     <<"4. Query Course Record\n"
     <<"5. Go back to main menu\n"<<endl
     <<"Enter your choice (1-5): ";
+    
+    int choice;
+    readInput(choice);
+    while(!verifyChoice(choice, 5)){
+        cout<<"Invalid input, re-enter again (1-5): ";
+        readInput(choice);
+    }
+    switch (choice) {
+        case 1:
+            insertCourse();
+            break;
+            
+        case 2:
+            modifyCourse();
+            break;
+            
+        case 3:
+            deleteCourse();
+            break;
+            
+        case 4:
+            queryCourse();
+            break;
+            
+        case 5:
+            break;
+    }
 }
 
 void DataManager::insertCourse(){
@@ -314,14 +370,42 @@ void DataManager::deleteCourse(){
 
 void DataManager::displayRegMenu(){
     system("clear");
+    cout<<endl;
     cout<<"HKUST Course Registration System  (Registration Menu)\n"
     <<"-----------------------------------------------------\n"<<endl
-    <<"1. Add Course\n"
+    <<"1. Enroll Course\n"
     <<"2. Drop Course\n"
     <<"3. Modify Exam Mark\n"
     <<"4. Query Registration\n"
     <<"5. Go back to main menu\n"<<endl
     <<"Enter your choice (1-5): ";
+    
+    int choice;
+    readInput(choice);
+    while(!verifyChoice(choice, 5)){
+        cout<<"Invalid input, re-enter again (1-5): ";
+        readInput(choice);
+    }
+    switch (choice) {
+        case 1:
+            insertReg();
+            break;
+            
+        case 2:
+            deleteReg();
+            break;
+            
+        case 3:
+            modifyMark();
+            break;
+            
+        case 4:
+            queryReg();
+            break;
+            
+        case 5:
+            break;
+    }
 }
 
 void DataManager::insertReg(){
@@ -353,13 +437,155 @@ void DataManager::insertReg(){
         return;
     }
     
+    if(regTable.queryRegistration(in_ID, in_code)){
+        cout<<"The student already registered the course\n"<<endl;
+        waitForEnter();
+        return;
+    }
     Registration newReg(stuptr, courseptr);
     Registration* regaddr=regTable.addRegistration(newReg);
     stuptr->linkToReg(regaddr);
     courseptr->linkToReg(regaddr);
-    cout<<"Add course successful\n"<<endl;
+    cout<<"Enroll course successful\n"<<endl;
     waitForEnter();
 }
 
+void DataManager::deleteReg(){
+    cout<<"Enter the student ID: ";
+    string in_ID;
+    readInput(in_ID);
+    while(!verifyStuID(in_ID)){
+        cout<<"Invalid Input, please re-enter [student ID]: ";
+        readInput(in_ID);
+    }
+    if(!stuTable.queryStudent(in_ID)){
+        cout<<"Student does not exist\n"<<endl;
+        waitForEnter();
+        return;
+    }
+    
+    cout<<"Enter the course code: ";
+    string in_code;
+    readInput(in_code);
+    while(!verifyCourseCode(in_code)){
+        cout<<"Invalid Input, please re-enter [course code]: ";
+        readInput(in_code);
+    }
+    if(courseTable.queryCourse(in_code)){
+        cout<<"Course does not exist\n"<<endl;
+        waitForEnter();
+        return;
+    }
+    
+    Node<Registration>* regNode=regTable.findRegistrationNode(in_ID, in_code);
+    if(regNode==NULL){
+        cout<<"Registration not found"<<endl;
+        waitForEnter();
+        return;
+    }
+    regNode->content.getStudent()->removeLinkToReg(&regNode->content);
+    regNode->content.getCourse()->removeLinkToReg(&regNode->content);
+    cout<<"Drop course successful\n"<<endl;
+    waitForEnter();
+}
 
+void DataManager::modifyMark(){
+    cout<<"Enter the student ID: ";
+    string in_ID;
+    readInput(in_ID);
+    while(!verifyStuID(in_ID)){
+        cout<<"Invalid Input, please re-enter [student ID]: ";
+        readInput(in_ID);
+    }
+    if(!stuTable.queryStudent(in_ID)){
+        cout<<"Student does not exist\n"<<endl;
+        waitForEnter();
+        return;
+    }
+    
+    cout<<"Enter the course code: ";
+    string in_code;
+    readInput(in_code);
+    while(!verifyCourseCode(in_code)){
+        cout<<"Invalid Input, please re-enter [course code]: ";
+        readInput(in_code);
+    }
+    if(!courseTable.queryCourse(in_code)){
+        cout<<"Course does not exist\n"<<endl;
+        waitForEnter();
+        return;
+    }
+    
+    Registration* reg=regTable.findRegistration(in_ID, in_code);
+    if(reg==NULL){
+        cout<<"Registration not found"<<endl;
+        waitForEnter();
+        return;
+    }
+    
+    double in_mark;
+    if(!reg->isGradeAvailable()){
+        cout<<"Enter the exam mark [0-100]: ";
+        readInput(in_mark);
+        while(!verifyMark(in_mark)){
+            cout<<"Invalid Input, please re-enter [exam mark]: ";
+            readInput(in_mark);
+        }
+    }
+    else{
+        cout<<"Enter the exam mark (if no change, just press ENTER) ["<<reg->getMark()<<"]: ";
+        if(readInput(in_mark)) goto finish;
+        while(!verifyMark(in_mark)){
+            cout<<"Invalid Input, please re-enter (if no change, just press ENTER) ["<<reg->getMark()<<"]: ";
+            if(readInput(in_mark)) goto finish;
+        }
+    }
+    reg->assignMark(in_mark);
+finish:
+    cout<<"Modification of exam mark successful\n"<<endl;
+    waitForEnter();
+}
 
+void DataManager::queryReg(){
+    cout<<"Enter the student ID: ";
+    string in_ID;
+    readInput(in_ID);
+    while(!verifyStuID(in_ID)){
+        cout<<"Invalid Input, please re-enter [student ID]: ";
+        readInput(in_ID);
+    }
+    if(!stuTable.queryStudent(in_ID)){
+        cout<<"Student does not exist\n"<<endl;
+        waitForEnter();
+        return;
+    }
+    
+    cout<<"Enter the course code: ";
+    string in_code;
+    readInput(in_code);
+    while(!verifyCourseCode(in_code)){
+        cout<<"Invalid Input, please re-enter [course code]: ";
+        readInput(in_code);
+    }
+    if(!courseTable.queryCourse(in_code)){
+        cout<<"Course does not exist\n"<<endl;
+        waitForEnter();
+        return;
+    }
+    
+    Registration* reg=regTable.findRegistration(in_ID, in_code);
+    if(reg==NULL){
+        cout<<"Registration not found"<<endl;
+        waitForEnter();
+        return;
+    }
+    
+    cout<<"\nStudent ID:\t"<<reg->getStudent()->getID()<<endl;
+    cout<<"Course Code:\t"<<reg->getCourse()->getCode()<<endl;
+    cout<<"Exam Mark:\t";
+    if(reg->isGradeAvailable()) cout<<reg->getMark()<<endl;
+    else cout<<"Not Assigned"<<endl;
+    
+    cout<<endl;
+    waitForEnter();
+}

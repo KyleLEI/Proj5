@@ -27,6 +27,8 @@ Registration* RegistrationTable::findRegistration
     Student s(stu_id, "", 0, Student::Male);
     Course c(course_code, "", 0);
     Registration temp(&s,&c);
+    Node<Registration>* regNode=table.find(temp);
+    if(regNode==NULL) return NULL;
     return &table.find(temp)->content;
 }
 
@@ -49,4 +51,8 @@ bool RegistrationTable::removeRegistration
 bool RegistrationTable::removeRegistrationNode
 (Node<Registration>* node){
     return table.removeNode(node);
+}
+
+bool RegistrationTable::queryRegistration(const std::string stu_id, const std::string code){
+    return findRegistrationNode(stu_id, code)!=NULL;
 }
