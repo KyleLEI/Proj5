@@ -32,9 +32,11 @@ int main(int argc, const char * argv[]) {
 //    ctable.addCourse(fuckthat);
 //    cout<<ctable.findCourse("ELEC2400")->getName()<<endl;
     DataManager dat;
-    dat.displayStudentMenu();
+    dat.displayRegMenu();
+    dat.insertCourse();
     dat.insertStudent();
-    dat.queryStudent();
+    dat.insertReg();
     dat.deleteStudent();
+    
     return dat.exec();
 }
