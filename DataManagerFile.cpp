@@ -14,7 +14,6 @@ using namespace std;
 
 void DataManager::displayFileMenu(){
     system("clear");
-    cout<<endl;
     cout<<"HKUST Course Registration System  (File Menu)\n"
     <<"---------------------------------------------\n"<<endl
     <<"1. Save Database\n"
@@ -58,11 +57,10 @@ void DataManager::saveDB(){
         waitForEnter();
         return;
     }
-    fout<<"Student: \n";
     saveStudent(fout, stuTable.getTable());
-    fout<<"Course: \n";
+    fout<<char(29);
     saveCourse(fout, courseTable.getTable());
-    fout<<"Reg: \n";
+    fout<<char(29);
     saveReg(fout, regTable.getTable());
     
     fout.close();

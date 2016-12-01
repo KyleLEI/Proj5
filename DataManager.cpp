@@ -13,7 +13,6 @@ using namespace std;
 
 void DataManager::displayStudentMenu(){
     system("clear");
-    cout<<endl;
     cout<<"HKUST Course Registration System  (Student Menu)\n"
     <<"------------------------------------------------\n"<<endl
     <<"1. Insert Student Record\n"
@@ -203,7 +202,6 @@ void DataManager::deleteStudent(){
 
 void DataManager::displayCourseMenu(){
     system("clear");
-    cout<<endl;
     cout<<"HKUST Course Registration System  (Course Menu)\n"
     <<"-----------------------------------------------\n"<<endl
     <<"1. Insert Course Record\n"
@@ -370,7 +368,6 @@ void DataManager::deleteCourse(){
 
 void DataManager::displayRegMenu(){
     system("clear");
-    cout<<endl;
     cout<<"HKUST Course Registration System  (Registration Menu)\n"
     <<"-----------------------------------------------------\n"<<endl
     <<"1. Enroll Course\n"

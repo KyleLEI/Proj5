@@ -139,7 +139,6 @@ bool DataManager::readInput(double& container){
 
 void DataManager::displayMainMenu(){
     system("clear");
-    cout<<endl;
     cout<<"HKUST Course Registration System\n"
     <<"--------------------------------\n"<<endl
     <<"1. Student Management\n"
@@ -157,7 +156,7 @@ void DataManager::saveStudent(ofstream& fout, SortedList<SortedList<Student> >* 
         for(int j=0;j<list->getSize();++j){
             Student* stuptr=&list->operator[](j);
             fout<<stuptr->getID()<<" "<<stuptr->getName()<<" ";
-            fout<<stuptr->getYear()<<" "<<static_cast<int>(stuptr->getGender())<<"\t";
+            fout<<stuptr->getYear()<<" "<<static_cast<int>(stuptr->getGender())<<char(30);
         }
     }
 }
@@ -168,7 +167,7 @@ void DataManager::saveCourse(ofstream& fout, SortedList<SortedList<Course> >* co
         for(int j=0;j<list->getSize();++j){
             Course* ptr=&list->operator[](j);
             fout<<ptr->getCode()<<" "<<ptr->getName()<<" ";
-            fout<<ptr->getCredit()<<"\t";
+            fout<<ptr->getCredit()<<char(30);
         }
     }
 }
@@ -176,7 +175,7 @@ void DataManager::saveCourse(ofstream& fout, SortedList<SortedList<Course> >* co
 void DataManager::saveReg(std::ofstream& fout, SortedList<Registration>* regToSave){
     for(int i=0;i<regToSave->getSize();++i){
         Registration* reg=&regToSave->operator[](i);
-        fout<<reg->getStudent()<<" "<<reg->getCourse()<<" ";
-        fout<<reg->isGradeAvailable()<<" "<<reg->getMark()<<"\t";
+        fout<<reg->getStudent()->getID()<<" "<<reg->getCourse()->getCode()<<" ";
+        fout<<reg->isGradeAvailable()<<" "<<reg->getMark()<<char(30);
     }
 }
