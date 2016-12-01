@@ -20,11 +20,13 @@ public:
     DataManager(){};
     int exec();
 private:
+    static void displayMainMenu();
     void displayStudentMenu();
     void displayCourseMenu();
     void displayRegMenu();
     void displayReportMenu();
     void displayFileMenu();
+    void displayHTMMenu();
     
     void insertStudent();
     void insertCourse();
@@ -42,10 +44,8 @@ private:
     void deleteCourse();
     void deleteReg();
     
-    void loadDB();
-    void saveDB();
-    
 private:
+    /*------helper functions------*/
     static inline bool isDigit(const char input){return input>='0'&&input<='9';}//ASCII
     static inline bool isUpper(const char input){return input>='A'&&input<='Z';}//ASCII
     static bool verifyStuID(const std::string);
@@ -61,12 +61,14 @@ private:
     static char charGender(Student::Gender);
     static std::string strGender(Student::Gender);
     
-    static void displayMainMenu();
-    
     static void waitForEnter();
     static bool readInput(std::string&);//returns true if only '\n' is input
     static bool readInput(int&);
     static bool readInput(double&);
+    
+    /*------file IO functions------*/
+    void loadDB();
+    void saveDB();
     
     void saveStudent(std::ofstream&, SortedList<Student>*);
     void saveCourse(std::ofstream&, SortedList<Course>*);
@@ -75,6 +77,13 @@ private:
     void loadStudent(std::ifstream&);
     void loadCourse(std::ifstream&);
     void loadReg(std::ifstream&);
+    
+    /*------HTML output functions------*/
+    static void addHTMLStart(std::ofstream&,std::string);
+    static void addHTMLEnd(std::ofstream&);
+    
+    void htmAllStudents();
+    void htmAllCourses();
 };
 
 #endif /* DataManager_h */

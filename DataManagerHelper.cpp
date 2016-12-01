@@ -31,6 +31,9 @@ int DataManager::exec(){
             case 3:
                 displayRegMenu();
                 break;
+            case 4:
+                displayHTMMenu();
+                break;
             case 5:
                 displayFileMenu();
                 break;
@@ -74,8 +77,10 @@ bool DataManager::verifyCourseCode(const string in_code){
     if(!(in_code.size()==7||in_code.size()==8)) return false;
     for(int i=0;i<4;++i)
         if(!isUpper(in_code[i])) return false;
-    for(int i=4;i<in_code.size();++i)
+    for(int i=4;i<in_code.size()-1;++i)
         if(!isDigit(in_code[i])) return false;
+    char c=in_code[in_code.size()-1];
+    if(!(isDigit(c)||isUpper(c))) return false;
     return true;
 }
 
@@ -290,4 +295,24 @@ void DataManager::loadReg(ifstream& fin){
         stuptr->linkToReg(regaddr);
         courseptr->linkToReg(regaddr);
     }
+}
+
+void DataManager::addHTMLStart(ofstream& fout, string title){
+    fout<<"<HTML>\n"
+    <<"<HEAD>\n"
+    <<"<HEAD>\n"
+    <<"<TITLE>"<<title<<"</TITLE>\n"
+    <<"</HEAD>\n"
+    <<"<BODY bgColor=#ffffcc>\n"
+    <<"<H1><FONT color=#6600ff>HKUST Course Registration System</FONT></H1>\n"
+    <<"<H2>"<<title<<"</H2>\n"
+    <<"<P>\n"
+    <<"<TABLE cellSpacing=1 cellPadding=1 border=1>\n\n";
+}
+
+void DataManager::addHTMLEnd(ofstream& fout){
+    fout<<"</TABLE>\n"
+    <<"</P>\n"
+    <<"</BODY>\n"
+    <<"</HTML>\n";
 }

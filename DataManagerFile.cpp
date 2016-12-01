@@ -8,7 +8,7 @@
 
 #include "DataManager.h"
 #include <iostream>
-#include <fstream>
+#include <cstdlib>
 
 #define secretSequence "c9t508ecGU7Z6mEY9WJDlTPNnePA0GJ"
 using namespace std;
