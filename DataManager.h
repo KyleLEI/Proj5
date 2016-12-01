@@ -79,11 +79,12 @@ private:
     void loadReg(std::ifstream&);
     
     /*------HTML output functions------*/
-    static void addHTMLStart(std::ofstream&,std::string);
-    static void addHTMLEnd(std::ofstream&);
+    static void addHTMLStart(std::ofstream&,std::string,bool);
+    static void addHTMLEnd(std::ofstream&,bool);
     
     void htmAllStudents();
     void htmAllCourses();
+    void htmCourseOfStudent();
 };
 
 #endif /* DataManager_h */

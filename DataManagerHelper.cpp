@@ -297,7 +297,7 @@ void DataManager::loadReg(ifstream& fin){
     }
 }
 
-void DataManager::addHTMLStart(ofstream& fout, string title){
+void DataManager::addHTMLStart(ofstream& fout, string title, bool has_table){
     fout<<"<HTML>\n"
     <<"<HEAD>\n"
     <<"<HEAD>\n"
@@ -306,13 +306,13 @@ void DataManager::addHTMLStart(ofstream& fout, string title){
     <<"<BODY bgColor=#ffffcc>\n"
     <<"<H1><FONT color=#6600ff>HKUST Course Registration System</FONT></H1>\n"
     <<"<H2>"<<title<<"</H2>\n"
-    <<"<P>\n"
-    <<"<TABLE cellSpacing=1 cellPadding=1 border=1>\n\n";
+    <<"<P>\n";
+    if(has_table)fout<<"<TABLE cellSpacing=1 cellPadding=1 border=1>\n\n";
 }
 
-void DataManager::addHTMLEnd(ofstream& fout){
-    fout<<"</TABLE>\n"
-    <<"</P>\n"
+void DataManager::addHTMLEnd(ofstream& fout,bool has_table){
+    if(has_table)fout<<"</TABLE>\n";
+    fout<<"</P>\n"
     <<"</BODY>\n"
     <<"</HTML>\n";
 }

@@ -42,3 +42,10 @@ bool StudentTable::queryStudent(const std::string in_ID){
     Student stuToFind(in_ID, "", 0, Student::Male);
     return table[hash(stuToFind)].find(stuToFind)!=NULL;
 }
+
+bool StudentTable::isEmpty() const{
+    for(int i=0;i<m;++i)
+        if(!table[i].isEmpty()) return false;
+    
+    return true;
+}

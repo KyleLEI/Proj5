@@ -35,7 +35,7 @@ void DataManager::displayHTMMenu(){
             break;
             
         case 2:
-            modifyStudent();
+            htmAllCourses();
             break;
             
         case 3:
@@ -59,29 +59,93 @@ void DataManager::htmAllStudents(){
         return;
     }
     
-    addHTMLStart(fout, "All Students List");
-    //add table title
-    fout<<"<TR>\n"
-    <<"<TD>Student ID</TD>\n"
-    <<"<TD>Student Name</TD>\n"
-    <<"<TD>Year</TD>\n"
-    <<"<TD>Gender</TD>\n"
-    <<"</TR>\n\n";
-    
-    //add students' info
-    for(int i=0;i<stuTable.getBucketNum();++i){
-        for(int j=0;j<stuTable.getTable()[i].getSize();++j){
-            fout<<"<TR>\n";
-            Student* stuptr=&stuTable.getTable()[i][j];
-            fout<<"<TD>"<<stuptr->getID()<<"</TD>\n"
-            <<"<TD>"<<stuptr->getName()<<"</TD>\n"
-            <<"<TD>"<<stuptr->getYear()<<"</TD>\n"
-            <<"<TD>"<<strGender(stuptr->getGender())<<"</TD>\n\n";
+    if(!stuTable.isEmpty()){
+        addHTMLStart(fout, "All Students List",true);
+        //add table title
+        fout<<"<TR>\n"
+        <<"<TD>Student ID</TD>\n"
+        <<"<TD>Student Name</TD>\n"
+        <<"<TD>Year</TD>\n"
+        <<"<TD>Gender</TD>\n"
+        <<"</TR>\n\n";
+        
+        //add students' info
+        for(int i=0;i<stuTable.getBucketNum();++i){
+            for(int j=0;j<stuTable.getTable()[i].getSize();++j){
+                fout<<"<TR>\n";
+                Student* stuptr=&stuTable.getTable()[i][j];
+                fout<<"<TD>"<<stuptr->getID()<<"</TD>\n"
+                <<"<TD>"<<stuptr->getName()<<"</TD>\n"
+                <<"<TD>"<<stuptr->getYear()<<"</TD>\n"
+                <<"<TD>"<<strGender(stuptr->getGender())<<"</TD>\n\n";
+            }
         }
+        addHTMLEnd(fout,true);
     }
-    addHTMLEnd(fout);
-    fout.close();
+    else{
+        addHTMLStart(fout, "All Students List",false);
+        fout<<"No student found\n";
+        addHTMLEnd(fout, false);
+    }
     
+    fout.close();
     cout<<"Output successful\n"<<endl;
     waitForEnter();
+}
+
+void DataManager::htmAllCourses(){
+    ofstream fout("Courses.html");
+    if(!fout.is_open()){
+        cout<<"Error: Write File Error\n"<<endl;
+        waitForEnter();
+        return;
+    }
+    
+    if(!courseTable.isEmpty()){
+        addHTMLStart(fout, "All Course List",true);
+        //add table title
+        fout<<"<TR>\n"
+        <<"<TD>Course Code</TD>\n"
+        <<"<TD>Course Name</TD>\n"
+        <<"<TD>Credit</TD>\n"
+        <<"</TR>\n\n";
+        
+        //add courses' info
+        for(int i=0;i<courseTable.getBucketNum();++i){
+            for(int j=0;j<courseTable.getTable()[i].getSize();++j){
+                fout<<"<TR>\n";
+                Course* ptr=&courseTable.getTable()[i][j];
+                fout<<"<TD>"<<ptr->getCode()<<"</TD>\n"
+                <<"<TD>"<<ptr->getName()<<"</TD>\n"
+                <<"<TD>"<<ptr->getCredit()<<"</TD>\n\n";
+            }
+        }
+        addHTMLEnd(fout,true);
+    }
+    else{
+        addHTMLStart(fout, "All Course List",false);
+        fout<<"No course found\n";
+        addHTMLEnd(fout, false);
+    }
+    
+    fout.close();
+    cout<<"Output successful\n"<<endl;
+    waitForEnter();
+}
+
+void DataManager::htmCourseOfStudent(){
+    ofstream fout("Courses.html");
+    if(!fout.is_open()){
+        cout<<"Error: Write File Error\n"<<endl;
+        waitForEnter();
+        return;
+    }
+    
+    addHTMLStart(fout, "All Course List",true);
+    //add table title
+    fout<<"<TR>\n"
+    <<"<TD>Course Code</TD>\n"
+    <<"<TD>Course Name</TD>\n"
+    <<"<TD>Credit</TD>\n"
+    <<"</TR>\n\n";
 }

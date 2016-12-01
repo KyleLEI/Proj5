@@ -44,3 +44,10 @@ bool CourseTable::queryCourse(const std::string in_code){
     Course courseToFind(in_code,"",0);
     return table[hash(courseToFind)].find(courseToFind)!=NULL;
 }
+
+bool CourseTable::isEmpty() const{
+    for(int i=0;i<m;++i)
+        if(!table[i].isEmpty()) return false;
+    
+    return true;
+}

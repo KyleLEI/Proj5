@@ -55,6 +55,7 @@ public:
     bool queryStudent(const std::string);
     SortedList<Student>* getTable(){return table;}
     int getBucketNum() const{return m;}
+    bool isEmpty() const;
 private:
     int hash(const Student&);
 };

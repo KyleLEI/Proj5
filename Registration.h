@@ -45,5 +45,6 @@ public:
     bool queryRegistration(const std::string stu_id, const std::string course_code);
     
     SortedList<Registration>* getTable(){return &table;}
+    bool isEmpty() const{return table.isEmpty();}
 };
 #endif /* Registration_h */
