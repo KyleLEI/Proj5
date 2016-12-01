@@ -53,6 +53,8 @@ public:
     Student* findStudent(const std::string);
     Node<Student>* findStudentNode(const std::string);
     bool queryStudent(const std::string);
+    SortedList<SortedList<Student> >* getTable(){return &table;}
+    
     
 private:
     int hash(const Student&);

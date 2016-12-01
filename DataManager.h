@@ -10,9 +10,8 @@
 #define DataManager_h
 #include "Registration.h"
 #include <string>
+#include <fstream>
 
-class FileManager{};
-class OutputHandler{};
 class DataManager{
     RegistrationTable regTable;
     StudentTable stuTable;
@@ -20,11 +19,13 @@ class DataManager{
 public:
     DataManager(){};
     int exec();
-public:
+private:
     void displayMainMenu();
     void displayStudentMenu();
     void displayCourseMenu();
     void displayRegMenu();
+    void displayReportMenu();
+    void displayFileMenu();
     
     void insertStudent();
     void insertCourse();
@@ -41,6 +42,9 @@ public:
     void deleteStudent();
     void deleteCourse();
     void deleteReg();
+    
+    void loadDB();
+    void saveDB();
     
 private:
     static inline bool isDigit(const char input){return input>='0'&&input<='9';}//ASCII
@@ -62,6 +66,10 @@ private:
     static bool readInput(std::string&);//returns true if only '\n' is input
     static bool readInput(int&);
     static bool readInput(double&);
+    
+    static void saveStudent(std::ofstream&, SortedList<SortedList<Student> >*);
+    static void saveCourse(std::ofstream&, SortedList<SortedList<Course> >*);
+    static void saveReg(std::ofstream&, SortedList<Registration>*);
 };
 
 #endif /* DataManager_h */

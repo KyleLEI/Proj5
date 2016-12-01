@@ -49,6 +49,7 @@ public:
     Node<Course>* findCourseNode(const std::string);
     bool queryCourse(const std::string);
     bool removeCourseNode(Node<Course>*);
+    SortedList<SortedList<Course> >* getTable(){return &table;}
 private:
     int hash(const Course&);
     static inline bool isDigit(const char input){return input>='0'&&input<='9';}//ASCII

@@ -7,6 +7,7 @@
 //
 
 #include "Student.h"
+using namespace std;
 
 StudentTable::StudentTable(const int numBuckets):m(numBuckets){
     for(int i=0;i<m;++i){

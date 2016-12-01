@@ -31,6 +31,9 @@ int DataManager::exec(){
             case 3:
                 displayRegMenu();
                 break;
+            case 5:
+                displayFileMenu();
+                break;
             case 6:
                 return 0;
         }
@@ -146,4 +149,34 @@ void DataManager::displayMainMenu(){
     <<"5. File Management\n"
     <<"6. Exit\n"<<endl
     <<"Enter your choice (1-6): ";
+}
+
+void DataManager::saveStudent(ofstream& fout, SortedList<SortedList<Student> >* stuToSave){
+    for(int i=0;i<stuToSave->getSize();++i){
+        SortedList<Student>* list=&stuToSave->operator[](i);
+        for(int j=0;j<list->getSize();++j){
+            Student* stuptr=&list->operator[](j);
+            fout<<stuptr->getID()<<" "<<stuptr->getName()<<" ";
+            fout<<stuptr->getYear()<<" "<<static_cast<int>(stuptr->getGender())<<"\t";
+        }
+    }
+}
+
+void DataManager::saveCourse(ofstream& fout, SortedList<SortedList<Course> >* courseToSave){
+    for(int i=0;i<courseToSave->getSize();++i){
+        SortedList<Course>* list=&courseToSave->operator[](i);
+        for(int j=0;j<list->getSize();++j){
+            Course* ptr=&list->operator[](j);
+            fout<<ptr->getCode()<<" "<<ptr->getName()<<" ";
+            fout<<ptr->getCredit()<<"\t";
+        }
+    }
+}
+
+void DataManager::saveReg(std::ofstream& fout, SortedList<Registration>* regToSave){
+    for(int i=0;i<regToSave->getSize();++i){
+        Registration* reg=&regToSave->operator[](i);
+        fout<<reg->getStudent()<<" "<<reg->getCourse()<<" ";
+        fout<<reg->isGradeAvailable()<<" "<<reg->getMark()<<"\t";
+    }
 }

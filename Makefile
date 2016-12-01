@@ -1,6 +1,6 @@
 all: Register
-Register: main.o Student.o Course.o Registration.o DataManager.o DataManagerHelper.o
-	g++ -std=c++11 -o Register main.o Student.o Course.o Registration.o DataManager.o DataManagerHelper.o
+Register: main.o Student.o Course.o Registration.o DataManager.o DataManagerHelper.o DataManagerFile.o
+	g++ -std=c++11 -o Register main.o Student.o Course.o Registration.o DataManager.o DataManagerHelper.o DataManagerFile.o
 main.o: main.cpp DataManager.h
 	g++ -std=c++11 -c main.cpp
 Student.o: Student.cpp Student.h SortedList.h
@@ -13,6 +13,8 @@ DataManager.o: DataManager.cpp
 	g++ -std=c++11 -c DataManager.cpp
 DataManagerHelper.o: DataManagerHelper.cpp
 	g++ -std=c++11 -c DataManagerHelper.cpp
+DataManagerFile.o: DataManagerFile.cpp
+	g++ -std=c++11 -c DataManagerFile.cpp
 
 clean:
 	rm *.o
