@@ -10,6 +10,7 @@
 #include <iostream>
 #include <fstream>
 
+#define secretSequence "c9t508ecGU7Z6mEY9WJDlTPNnePA0GJ"
 using namespace std;
 
 void DataManager::displayFileMenu(){
@@ -33,7 +34,7 @@ void DataManager::displayFileMenu(){
             break;
             
         case 2:
-
+            loadDB();
             break;
             
         case 3:
@@ -57,13 +58,47 @@ void DataManager::saveDB(){
         waitForEnter();
         return;
     }
+    fout<<secretSequence<<"\n";//add a secret sequence to indicate file type
     saveStudent(fout, stuTable.getTable());
     fout<<char(29);
     saveCourse(fout, courseTable.getTable());
     fout<<char(29);
     saveReg(fout, regTable.getTable());
+    fout<<char(29);
     
     fout.close();
-    cout<<"Successfully saved\n"<<endl;
+    cout<<"Database successfully saved\n"<<endl;
+    waitForEnter();
+}
+
+void DataManager::loadDB(){
+    cout<<"Enter the filename: ";
+    string filename;
+    while(readInput(filename)){
+        cout<<"Please enter a valid filename: ";
+        readInput(filename);
+    }
+    
+    ifstream fin(filename);
+    if(!fin.is_open()){
+        cout<<"Error: Load File Error (File does not exist / File Corrupted)\n"<<endl;
+        waitForEnter();
+        return;
+    }
+    
+    string sequence;
+    fin>>sequence;
+    if(sequence!=secretSequence){//verify the secret sequence, if match, the file type is correct
+        cout<<"Error: Load File Error (Incorrect Format)\n"<<endl;
+        waitForEnter();
+        return;
+    }
+    fin.get();//get rid of the \n
+    loadStudent(fin);
+    loadCourse(fin);
+    loadReg(fin);
+    fin.close();
+    
+    cout<<"Database successfully loaded\n"<<endl;
     waitForEnter();
 }

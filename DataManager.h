@@ -20,7 +20,6 @@ public:
     DataManager(){};
     int exec();
 private:
-    void displayMainMenu();
     void displayStudentMenu();
     void displayCourseMenu();
     void displayRegMenu();
@@ -62,6 +61,8 @@ private:
     static char charGender(Student::Gender);
     static std::string strGender(Student::Gender);
     
+    static void displayMainMenu();
+    
     static void waitForEnter();
     static bool readInput(std::string&);//returns true if only '\n' is input
     static bool readInput(int&);
@@ -70,6 +71,10 @@ private:
     static void saveStudent(std::ofstream&, SortedList<SortedList<Student> >*);
     static void saveCourse(std::ofstream&, SortedList<SortedList<Course> >*);
     static void saveReg(std::ofstream&, SortedList<Registration>*);
+    
+    void loadStudent(std::ifstream&);
+    void loadCourse(std::ifstream&);
+    void loadReg(std::ifstream&);
 };
 
 #endif /* DataManager_h */
