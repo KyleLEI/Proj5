@@ -7,19 +7,13 @@
 //
 
 #include "Student.h"
+#include <cmath>
 using namespace std;
-
-StudentTable::StudentTable(const int numBuckets):m(numBuckets){
-    for(int i=0;i<m;++i){
-        SortedList<Student> temp;
-        table.insertRaw(temp); //new secondary lists in primary list
-    }
-}
 
 int StudentTable::hash(const Student& input){
     int sum=0;
     for(int i=0;i<input.getID().size();++i)
-        sum+=input.getID()[i];//won't overflow since 99999999<2^31-1
+        sum+=(input.getID()[i]-'0')*pow(10,i);//won't overflow since 99999999<2^31-1
     sum%=m;
     return sum;
 }

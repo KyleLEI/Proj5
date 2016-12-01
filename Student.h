@@ -44,18 +44,17 @@ private:
 };
 
 class StudentTable{
-    SortedList<SortedList<Student> > table;
-    const int m;
+    enum{m=29};
+    SortedList<Student> table[m];
 public:
-    StudentTable(const int numBuckets=29);
+    StudentTable(){};
     void addStudent(const Student&);
     bool removeStudentNode(Node<Student>*);
     Student* findStudent(const std::string);
     Node<Student>* findStudentNode(const std::string);
     bool queryStudent(const std::string);
-    SortedList<SortedList<Student> >* getTable(){return &table;}
-    
-    
+    SortedList<Student>* getTable(){return table;}
+    int getBucketNum() const{return m;}
 private:
     int hash(const Student&);
 };

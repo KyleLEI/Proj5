@@ -150,22 +150,20 @@ void DataManager::displayMainMenu(){
     <<"Enter your choice (1-6): ";
 }
 
-void DataManager::saveStudent(ofstream& fout, SortedList<SortedList<Student> >* stuToSave){
-    for(int i=0;i<stuToSave->getSize();++i){
-        SortedList<Student>* list=&stuToSave->operator[](i);
-        for(int j=0;j<list->getSize();++j){
-            Student* stuptr=&list->operator[](j);
+void DataManager::saveStudent(ofstream& fout, SortedList<Student>* stuToSave){
+    for(int i=0;i<stuTable.getBucketNum();++i){
+        for(int j=0;j<stuToSave[i].getSize();++j){
+            Student* stuptr=&stuToSave[i][j];
             fout<<stuptr->getID()<<char(31)<<stuptr->getName()<<char(31);
             fout<<stuptr->getYear()<<char(31)<<static_cast<int>(stuptr->getGender())<<char(30);
         }
     }
 }
 
-void DataManager::saveCourse(ofstream& fout, SortedList<SortedList<Course> >* courseToSave){
-    for(int i=0;i<courseToSave->getSize();++i){
-        SortedList<Course>* list=&courseToSave->operator[](i);
-        for(int j=0;j<list->getSize();++j){
-            Course* ptr=&list->operator[](j);
+void DataManager::saveCourse(ofstream& fout, SortedList<Course>* courseToSave){
+    for(int i=0;i<courseTable.getBucketNum();++i){
+        for(int j=0;j<courseToSave[i].getSize();++j){
+            Course* ptr=&courseToSave[i][j];
             fout<<ptr->getCode()<<char(31)<<ptr->getName()<<char(31);
             fout<<ptr->getCredit()<<char(30);
         }

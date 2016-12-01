@@ -39,17 +39,17 @@ public:
 };
 
 class CourseTable{
-    SortedList<SortedList<Course> > table;
-    const int m;
-    enum{b=36};
+    enum{b=36,m=17};
+    SortedList<Course> table[m];
 public:
-    CourseTable(const int=17);
+    CourseTable(){};
     void addCourse(const Course&);
     Course* findCourse(const std::string);
     Node<Course>* findCourseNode(const std::string);
     bool queryCourse(const std::string);
     bool removeCourseNode(Node<Course>*);
-    SortedList<SortedList<Course> >* getTable(){return &table;}
+    SortedList<Course>* getTable(){return table;}
+    int getBucketNum() const{return m;}
 private:
     int hash(const Course&);
     static inline bool isDigit(const char input){return input>='0'&&input<='9';}//ASCII

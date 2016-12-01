@@ -68,9 +68,9 @@ private:
     static bool readInput(int&);
     static bool readInput(double&);
     
-    static void saveStudent(std::ofstream&, SortedList<SortedList<Student> >*);
-    static void saveCourse(std::ofstream&, SortedList<SortedList<Course> >*);
-    static void saveReg(std::ofstream&, SortedList<Registration>*);
+    void saveStudent(std::ofstream&, SortedList<Student>*);
+    void saveCourse(std::ofstream&, SortedList<Course>*);
+    void saveReg(std::ofstream&, SortedList<Registration>*);
     
     void loadStudent(std::ifstream&);
     void loadCourse(std::ifstream&);

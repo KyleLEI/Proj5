@@ -572,7 +572,7 @@ void DataManager::queryReg(){
     
     Registration* reg=regTable.findRegistration(in_ID, in_code);
     if(reg==NULL){
-        cout<<"Registration not found"<<endl;
+        cout<<"Registration not found\n"<<endl;
         waitForEnter();
         return;
     }

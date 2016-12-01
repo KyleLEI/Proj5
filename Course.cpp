@@ -9,13 +9,6 @@
 #include "Course.h"
 #include <cmath>
 
-CourseTable::CourseTable(const int numBuckets):m(numBuckets){
-    for(int i=0;i<m;++i){
-        SortedList<Course> temp;
-        table.insertRaw(temp); //new secondary lists in primary list
-    }
-}
-
 int CourseTable::hash(const Course& input){
     int sum=0;
     for(int i=0;i<input.getCode().size();++i){

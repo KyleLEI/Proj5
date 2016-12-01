@@ -48,7 +48,6 @@ void DataManager::saveDB(){
     string filename;
     while(readInput(filename)){
         cout<<"Please enter a valid filename: ";
-        readInput(filename);
     }
     
     ofstream fout(filename);
@@ -75,7 +74,6 @@ void DataManager::loadDB(){
     string filename;
     while(readInput(filename)){
         cout<<"Please enter a valid filename: ";
-        readInput(filename);
     }
     
     ifstream fin(filename);
