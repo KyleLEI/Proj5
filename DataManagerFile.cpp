@@ -25,7 +25,7 @@ void DataManager::displayFileMenu(){
     int choice;
     readInput(choice);
     while(!verifyChoice(choice, 3)){
-        cout<<"Invalid input, re-enter again (1-3): ";
+        cout<<"Invalid input, re-enter (1-3): ";
         readInput(choice);
     }
     switch (choice) {
@@ -38,7 +38,6 @@ void DataManager::displayFileMenu(){
             break;
             
         case 3:
-
             break;
     }
     
@@ -65,8 +64,8 @@ void DataManager::saveDB(){
     fout<<char(29);
     saveReg(fout, regTable.getTable());
     fout<<char(29);
-    
     fout.close();
+    
     cout<<"Database successfully saved\n"<<endl;
     waitForEnter();
 }

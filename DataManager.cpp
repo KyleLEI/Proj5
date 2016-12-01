@@ -25,7 +25,7 @@ void DataManager::displayStudentMenu(){
     int choice;
     readInput(choice);
     while(!verifyChoice(choice, 5)){
-        cout<<"Invalid input, re-enter again (1-5): ";
+        cout<<"Invalid input, re-enter (1-5): ";
         readInput(choice);
     }
     switch (choice) {
@@ -214,7 +214,7 @@ void DataManager::displayCourseMenu(){
     int choice;
     readInput(choice);
     while(!verifyChoice(choice, 5)){
-        cout<<"Invalid input, re-enter again (1-5): ";
+        cout<<"Invalid input, re-enter (1-5): ";
         readInput(choice);
     }
     switch (choice) {
@@ -380,7 +380,7 @@ void DataManager::displayRegMenu(){
     int choice;
     readInput(choice);
     while(!verifyChoice(choice, 5)){
-        cout<<"Invalid input, re-enter again (1-5): ";
+        cout<<"Invalid input, re-enter (1-5): ";
         readInput(choice);
     }
     switch (choice) {
@@ -468,7 +468,7 @@ void DataManager::deleteReg(){
         cout<<"Invalid Input, please re-enter [course code]: ";
         readInput(in_code);
     }
-    if(courseTable.queryCourse(in_code)){
+    if(!courseTable.queryCourse(in_code)){
         cout<<"Course does not exist\n"<<endl;
         waitForEnter();
         return;
