@@ -85,20 +85,16 @@ T* SortedList<T>::insert(const T& input){
     if(head==NULL){initialize(input); return &head->content;}
     Node<T>* newNode=new Node<T>(input);
     
+    Node<T>* node=head;
     //iterate over the linked list and find where to insert
-    for(Node<T>* node=head;node!=tail;node=node->next){
+    for(int i=0;i<size-1;++i){
         if(node->content>input){
             insertFront(newNode, node);
             return &newNode->content;
         }
     }
-    if(tail->content>input){
-        insertFront(newNode, tail);
-        return &newNode->content;
-    }
     //if larger than all existing nodes, insert at tail
     tail->next=newNode;
-    
     //maintain the property of a linked list
     newNode->prev=tail;
     newNode->next=head;
@@ -137,14 +133,14 @@ void SortedList<T>::insertFront(Node<T>* toBeInserted, Node<T>* node){
 
 template<typename T>
 Node<T>* SortedList<T>::find(const T& target){
-    if(size==0) return NULL;
+    
     //iterate over the list to find the entry
-    for(Node<T>* node=head;node!=tail;node=node->next){
+    Node<T>* node=head;
+    for(int i=0;i<size;++i){
         if(node->content==target)
             return node;
+        node=node->next;
     }
-    if(tail->content==target)
-        return tail;
     
     //if not found, return NULL
     return NULL;

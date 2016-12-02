@@ -250,7 +250,7 @@ void DataManager::loadReg(ifstream& fin){
         while(fin.get(c),c!=char(30)){
             container.push_back(c);
         }
-        int mark=atoi(container.c_str());
+        double mark=atof(container.c_str());
         container.clear();
         
         Registration newReg(stuptr, courseptr,isGrade,mark);
