@@ -13,7 +13,7 @@
 
 class Registration;
 
-class Student{//TODO: assignment operator
+class Student{
     std::string ID;
     std::string name;
     int year;

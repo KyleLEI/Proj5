@@ -300,7 +300,6 @@ void DataManager::loadReg(ifstream& fin){
 void DataManager::addHTMLStart(ofstream& fout, string title, bool has_table){
     fout<<"<HTML>\n"
     <<"<HEAD>\n"
-    <<"<HEAD>\n"
     <<"<TITLE>"<<title<<"</TITLE>\n"
     <<"</HEAD>\n"
     <<"<BODY bgColor=#ffffcc>\n"

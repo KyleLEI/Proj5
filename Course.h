@@ -13,7 +13,7 @@
 
 class Registration;
 
-class Course{//TODO: assignment operator
+class Course{
     std::string code;
     std::string name;
     int credit;
