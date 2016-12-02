@@ -46,20 +46,20 @@ private:
     
 private:
     /*------helper functions------*/
-    static inline bool isDigit(const char input){return input>='0'&&input<='9';}//ASCII
-    static inline bool isUpper(const char input){return input>='A'&&input<='Z';}//ASCII
-    static bool verifyStuID(const std::string);
-    static bool verifyStuName(const std::string);
-    static bool verifyStuYear(const int);
-    static bool verifyStuGender(const std::string);
-    static bool verifyCourseCode(const std::string);
-    static bool verifyCourseName(const std::string);
-    static bool verifyCredit(const int);
-    static bool verifyMark(const double);
-    static bool verifyChoice(const int,const int);
+    static inline bool isDigit(const char& input){return input>='0'&&input<='9';}//ASCII
+    static inline bool isUpper(const char& input){return input>='A'&&input<='Z';}//ASCII
+    static bool verifyStuID(const std::string&);
+    static bool verifyStuName(const std::string&);
+    static bool verifyStuYear(const int&);
+    static bool verifyStuGender(const std::string&);
+    static bool verifyCourseCode(const std::string&);
+    static bool verifyCourseName(const std::string&);
+    static bool verifyCredit(const int&);
+    static bool verifyMark(const double&);
+    static bool verifyChoice(const int&,const int&);
     
-    static char charGender(Student::Gender);
-    static std::string strGender(Student::Gender);
+    static char charGender(const Student::Gender&);
+    static std::string strGender(const Student::Gender&);
     
     static void waitForEnter();
     static bool readInput(std::string&);//returns true if only '\n' is input
@@ -79,7 +79,7 @@ private:
     void loadReg(std::ifstream&);
     
     /*------HTML output functions------*/
-    static void addHTMLStart(std::ofstream&,std::string,bool);
+    static void addHTMLStart(std::ofstream&,const std::string&,bool);
     static void addHTMLEnd(std::ofstream&,bool);
     
     void htmAllStudents();

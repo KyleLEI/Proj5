@@ -485,6 +485,7 @@ void DataManager::deleteReg(){
     }
     regNode->content.getStudent()->removeLinkToReg(&regNode->content);
     regNode->content.getCourse()->removeLinkToReg(&regNode->content);
+    regTable.removeRegistrationNode(regNode);
     cout<<"Drop course successful\n"<<endl;
     waitForEnter();
 }
