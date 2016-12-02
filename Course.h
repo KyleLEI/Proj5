@@ -38,6 +38,7 @@ public:
     bool operator>(const Course& other){return this->code>other.code;}
     friend bool operator<(const Course& c1,const Course& c2){return c1.code<c2.code;}//overloaded for sort
     bool operator==(const Course& other){return this->code==other.code;}
+    Course& operator=(const Course&);
 };
 
 class CourseTable{

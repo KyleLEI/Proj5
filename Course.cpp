@@ -52,3 +52,10 @@ int CourseTable::getSize() const{
     
     return sizesum;
 }
+
+Course& Course::operator=(const Course& other){
+    code=other.code;
+    name=other.name;
+    credit=other.credit;
+    return *this;
+}

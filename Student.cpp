@@ -50,3 +50,10 @@ int StudentTable::getSize() const{
     
     return sizesum;
 }
+
+Student& Student::operator=(const Student& other){
+    ID=other.ID;
+    name=other.name;
+    year=other.year;
+    return *this;
+}
