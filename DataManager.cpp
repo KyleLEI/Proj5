@@ -72,7 +72,7 @@ void DataManager::insertStudent(){
         readInput(in_name);
     }
     
-    cout<<"Enter the student year [1-3]: ";
+    cout<<"Enter the student year [1-4]: ";
     int in_year;
     readInput(in_year);
     while(!verifyStuYear(in_year)){
@@ -440,7 +440,11 @@ void DataManager::insertReg(){
         return;
     }
     Registration newReg(stuptr, courseptr);
+    
+    //insert registration record to regTable
     Registration* regaddr=regTable.addRegistration(newReg);
+    
+    //link related student and course to the registration record
     stuptr->linkToReg(regaddr);
     courseptr->linkToReg(regaddr);
     cout<<"Enroll course successful\n"<<endl;

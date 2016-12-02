@@ -66,7 +66,7 @@ bool DataManager::verifyStuName(const string in_name){
 }
 
 bool DataManager::verifyStuYear(const int in_year){
-    return in_year>=1&&in_year<=3;//is it 3 or 4?
+    return in_year>=1&&in_year<=4;
 }
 
 bool DataManager::verifyStuGender(const string g){
@@ -74,13 +74,14 @@ bool DataManager::verifyStuGender(const string g){
 }
 
 bool DataManager::verifyCourseCode(const string in_code){
-    if(!(in_code.size()==7||in_code.size()==8)) return false;
+    if(!(in_code.size()==8||in_code.size()==9)) return false;
     for(int i=0;i<4;++i)
         if(!isUpper(in_code[i])) return false;
-    for(int i=4;i<in_code.size()-1;++i)
+    for(int i=4;i<8;++i)
         if(!isDigit(in_code[i])) return false;
-    char c=in_code[in_code.size()-1];
-    if(!(isDigit(c)||isUpper(c))) return false;
+    if(in_code.size()==9){
+        if(!isUpper(in_code[8])) return false;
+    }
     return true;
 }
 
@@ -197,6 +198,8 @@ void DataManager::loadStudent(ifstream& fin){
         string in_ID=container;
         container.clear();
         
+        if(stuTable.queryStudent(in_ID)) continue;
+        
         while(fin.get(c)&&c!=char(31)){
             container.push_back(c);
         }
@@ -237,6 +240,8 @@ void DataManager::loadCourse(ifstream& fin){
         string in_code=container;
         container.clear();
         
+        if(courseTable.queryCourse(in_code)) continue;
+        
         while(fin.get(c)&&c!=char(31)){
             container.push_back(c);
         }
@@ -276,6 +281,7 @@ void DataManager::loadReg(ifstream& fin){
         Course* courseptr=courseTable.findCourse(in_code);
         container.clear();
         
+        if(regTable.queryRegistration(in_ID, in_code)) continue;
         while(fin.get(c)&&c!=char(31)){
             container.push_back(c);
         }

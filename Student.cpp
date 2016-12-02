@@ -55,5 +55,6 @@ Student& Student::operator=(const Student& other){
     ID=other.ID;
     name=other.name;
     year=other.year;
+    //not copying registrations since when the assignment operator is called in HTML output, only ID name and year is needed.
     return *this;
 }

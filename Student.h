@@ -28,15 +28,15 @@ public:
     std::string getName() const{return name;}
     int getYear() const{return year;}
     Gender getGender() const{return gender;}
-    SortedList<Registration*>* getEnrolledCourses() {return &ptrs;}
-    bool removeLinkToReg(Registration* in_link){return ptrs.remove(in_link);}
     
-    void setID(std::string in_ID){ID=in_ID;}
+    //these set functions are for modifying the student
     void setName(std::string in_name){name=in_name;}
     void setYear(int in_year){year=in_year;}
     void setGender(Gender in_g){gender=in_g;}
     
+    SortedList<Registration*>* getEnrolledCourses() {return &ptrs;}
     void linkToReg(Registration* in_link){ptrs.insertRaw(in_link);}
+    bool removeLinkToReg(Registration* in_link){return ptrs.remove(in_link);}
     
     bool operator>(const Student& other){return this->ID>other.ID;}
     friend bool operator<(const Student& s1,const Student& s2){return s1.ID<s2.ID;}//overloaded for sort
@@ -48,7 +48,7 @@ private:
 
 class StudentTable{
     enum{m=29};
-    SortedList<Student> table[m];
+    SortedList<Student> table[m];//array of linked list for hashing
 public:
     StudentTable(){};
     void addStudent(const Student&);
