@@ -9,6 +9,7 @@
 #include "DataManager.h"
 #include <iostream>
 #include <cstdlib>
+#include <algorithm>
 
 using namespace std;
 
@@ -39,7 +40,7 @@ void DataManager::displayHTMMenu(){
             break;
             
         case 3:
-            deleteStudent();
+            htmCourseOfStudent();
             break;
             
         case 4:
@@ -59,7 +60,8 @@ void DataManager::htmAllStudents(){
         return;
     }
     
-    if(!stuTable.isEmpty()){
+    const int size=stuTable.getSize();
+    if(size!=0){
         addHTMLStart(fout, "All Students List",true);
         //add table title
         fout<<"<TR>\n"
@@ -69,18 +71,27 @@ void DataManager::htmAllStudents(){
         <<"<TD>Gender</TD>\n"
         <<"</TR>\n\n";
         
-        //add students' info
+        //sort students
+        Student* students=new Student[size];
+        int top=0;
         for(int i=0;i<stuTable.getBucketNum();++i){
             for(int j=0;j<stuTable.getTable()[i].getSize();++j){
-                fout<<"<TR>\n";
-                Student* stuptr=&stuTable.getTable()[i][j];
-                fout<<"<TD>"<<stuptr->getID()<<"</TD>\n"
-                <<"<TD>"<<stuptr->getName()<<"</TD>\n"
-                <<"<TD>"<<stuptr->getYear()<<"</TD>\n"
-                <<"<TD>"<<strGender(stuptr->getGender())<<"</TD>\n\n";
+                students[top]=stuTable.getTable()[i][j];
+                ++top;
             }
         }
+        sort(students, students+size);
+        
+        for(int i=0;i<size;++i){
+            Student* stuptr=students+i;
+            fout<<"<TR>\n";
+            fout<<"<TD>"<<stuptr->getID()<<"</TD>\n"
+            <<"<TD>"<<stuptr->getName()<<"</TD>\n"
+            <<"<TD>"<<stuptr->getYear()<<"</TD>\n"
+            <<"<TD>"<<strGender(stuptr->getGender())<<"</TD>\n\n";
+        }
         addHTMLEnd(fout,true);
+        delete []students;
     }
     else{
         addHTMLStart(fout, "All Students List",false);
@@ -101,7 +112,8 @@ void DataManager::htmAllCourses(){
         return;
     }
     
-    if(!courseTable.isEmpty()){
+    const int size=courseTable.getSize();
+    if(size!=0){
         addHTMLStart(fout, "All Course List",true);
         //add table title
         fout<<"<TR>\n"
@@ -111,16 +123,25 @@ void DataManager::htmAllCourses(){
         <<"</TR>\n\n";
         
         //add courses' info
+        Course* courses=new Course[size];
+        int top=0;
         for(int i=0;i<courseTable.getBucketNum();++i){
             for(int j=0;j<courseTable.getTable()[i].getSize();++j){
-                fout<<"<TR>\n";
-                Course* ptr=&courseTable.getTable()[i][j];
-                fout<<"<TD>"<<ptr->getCode()<<"</TD>\n"
-                <<"<TD>"<<ptr->getName()<<"</TD>\n"
-                <<"<TD>"<<ptr->getCredit()<<"</TD>\n\n";
+                courses[top]=courseTable.getTable()[i][j];
+                ++top;
             }
         }
+        sort(courses,courses+size);
+        
+        for(int i=0;i<size;++i){
+            Course* ptr=courses+i;
+            fout<<"<TR>\n";
+            fout<<"<TD>"<<ptr->getCode()<<"</TD>\n"
+            <<"<TD>"<<ptr->getName()<<"</TD>\n"
+            <<"<TD>"<<ptr->getCredit()<<"</TD>\n\n";
+        }
         addHTMLEnd(fout,true);
+        delete []courses;
     }
     else{
         addHTMLStart(fout, "All Course List",false);
@@ -134,18 +155,70 @@ void DataManager::htmAllCourses(){
 }
 
 void DataManager::htmCourseOfStudent(){
-    ofstream fout("Courses.html");
+    cout<<"Enter the student ID: ";
+    string in_ID;
+    readInput(in_ID);
+    while(!verifyStuID(in_ID)){
+        cout<<"Invalid Input, please re-enter [student ID]: ";
+        readInput(in_ID);
+    }
+    Student* stuptr=stuTable.findStudent(in_ID);
+    if(stuptr==NULL){
+        cout<<"Student does not exist\n"<<endl;
+        waitForEnter();
+        return;
+    }
+    
+    string filename;filename+=in_ID;filename+=".html";
+    ofstream fout(filename);
     if(!fout.is_open()){
         cout<<"Error: Write File Error\n"<<endl;
         waitForEnter();
         return;
     }
     
-    addHTMLStart(fout, "All Course List",true);
-    //add table title
-    fout<<"<TR>\n"
-    <<"<TD>Course Code</TD>\n"
-    <<"<TD>Course Name</TD>\n"
-    <<"<TD>Credit</TD>\n"
-    <<"</TR>\n\n";
+    string title;
+    title+="Course Records for Student: ";title+=stuptr->getName();
+    title+=" (";title+=stuptr->getID();title+=")";
+    SortedList<Registration*>* reg=stuptr->getEnrolledCourses();
+    int size=stuptr->getEnrolledCourses()->getSize();
+    if(size!=0){
+        addHTMLStart(fout, title,true);
+        //add table title
+        fout<<"<TR>\n"
+        <<"<TD>Course Code</TD>\n"
+        <<"<TD>Course Name</TD>\n"
+        <<"<TD>Credit</TD>\n"
+        <<"<TD>Exam Mark</TD>\n"
+        <<"</TR>\n\n";
+        Registration* regs=new Registration[size];
+        int top=0;
+        for(int i=0;i<reg->getSize();++i){
+            regs[top]=*reg->operator[](i);
+            ++top;
+        }
+        sort(regs,regs+size);
+        
+        for(int i=0;i<size;++i){
+            Registration* regToAdd=regs+i;
+            fout<<"<TR>\n";
+            fout<<"<TD>"<<regToAdd->getCourse()->getCode()<<"</TD>\n"
+            <<"<TD>"<<regToAdd->getCourse()->getName()<<"</TD>\n"
+            <<"<TD>"<<regToAdd->getCourse()->getCredit()<<"</TD>\n";
+            if(regToAdd->isGradeAvailable())
+                fout<<"<TD>"<<regToAdd->getMark()<<"</TD>\n\n";
+            else fout<<"<TD>N/A</TD>\n\n";
+        }
+        addHTMLEnd(fout, true);
+        delete []regs;
+    }
+    else{
+        addHTMLStart(fout, title, false);
+        fout<<"No enrolled course found\n";
+        addHTMLEnd(fout, false);
+    }
+    
+    fout.close();
+    cout<<"Output successful\n"<<endl;
+    waitForEnter();
 }

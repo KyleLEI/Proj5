@@ -13,12 +13,13 @@
 
 class Registration;
 
-class Course{
+class Course{//TODO: assignment operator
     std::string code;
     std::string name;
     int credit;
     SortedList<Registration*> ptrs;
 public:
+    Course(){};
     Course(std::string in_code, std::string in_name, int in_credit):
     code(in_code),name(in_name),credit(in_credit){}
     
@@ -35,6 +36,7 @@ public:
     void linkToReg(Registration* in_link){ptrs.insert(in_link);}
     
     bool operator>(const Course& other){return this->code>other.code;}
+    friend bool operator<(const Course& c1,const Course& c2){return c1.code<c2.code;}//overloaded for sort
     bool operator==(const Course& other){return this->code==other.code;}
 };
 
@@ -50,7 +52,8 @@ public:
     bool removeCourseNode(Node<Course>*);
     SortedList<Course>* getTable(){return table;}
     int getBucketNum() const{return m;}
-    bool isEmpty() const;
+    int getSize() const;
+    
 private:
     int hash(const Course&);
     static inline bool isDigit(const char input){return input>='0'&&input<='9';}//ASCII

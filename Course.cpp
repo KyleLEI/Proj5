@@ -45,9 +45,10 @@ bool CourseTable::queryCourse(const std::string in_code){
     return table[hash(courseToFind)].find(courseToFind)!=NULL;
 }
 
-bool CourseTable::isEmpty() const{
+int CourseTable::getSize() const{
+    int sizesum=0;
     for(int i=0;i<m;++i)
-        if(!table[i].isEmpty()) return false;
+        sizesum+=table[i].getSize();
     
-    return true;
+    return sizesum;
 }

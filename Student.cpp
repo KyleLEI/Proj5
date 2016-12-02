@@ -43,9 +43,10 @@ bool StudentTable::queryStudent(const std::string in_ID){
     return table[hash(stuToFind)].find(stuToFind)!=NULL;
 }
 
-bool StudentTable::isEmpty() const{
+int StudentTable::getSize() const{
+    int sizesum=0;
     for(int i=0;i<m;++i)
-        if(!table[i].isEmpty()) return false;
+        sizesum+=table[i].getSize();
     
-    return true;
+    return sizesum;
 }

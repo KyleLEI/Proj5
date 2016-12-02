@@ -19,6 +19,7 @@ class Registration{
     double mark;
 public:
     Registration(Student* in_stu,Course* in_course,bool in_assigned=false,double in_mark=0.0);
+    Registration(){};
     
     Student* getStudent() const{return stu;}
     Course* getCourse() const{return course;}
@@ -31,6 +32,12 @@ public:
     
     bool operator>(const Registration& other);
     bool operator==(const Registration& other);
+    friend bool operator<(const Registration& r1,const Registration& r2){//overloaded for sort
+        if(*r1.stu<*r2.stu) return true;
+        if(*r1.stu==*r2.stu)
+            if(*r1.course<*r2.course) return true;
+        return false;
+    }
 };
 
 class RegistrationTable{
@@ -45,6 +52,5 @@ public:
     bool queryRegistration(const std::string stu_id, const std::string course_code);
     
     SortedList<Registration>* getTable(){return &table;}
-    bool isEmpty() const{return table.isEmpty();}
 };
 #endif /* Registration_h */

@@ -13,13 +13,14 @@
 
 class Registration;
 
-class Student{
+class Student{//TODO: assignment operator
     std::string ID;
     std::string name;
     int year;
     SortedList<Registration*> ptrs;
 public:
     enum Gender{Male=0, Female};
+    Student(){};
     Student(std::string in_ID, std::string in_name, int in_year, Gender in_gender):
     ID(in_ID),name(in_name),year(in_year),gender(in_gender){};
     
@@ -38,6 +39,7 @@ public:
     void linkToReg(Registration* in_link){ptrs.insertRaw(in_link);}
     
     bool operator>(const Student& other){return this->ID>other.ID;}
+    friend bool operator<(const Student& s1,const Student& s2){return s1.ID<s2.ID;}//overloaded for sort
     bool operator==(const Student& other){return this->ID==other.ID;}
 private:
     Gender gender;
@@ -55,7 +57,7 @@ public:
     bool queryStudent(const std::string);
     SortedList<Student>* getTable(){return table;}
     int getBucketNum() const{return m;}
-    bool isEmpty() const;
+    int getSize() const;
 private:
     int hash(const Student&);
 };
