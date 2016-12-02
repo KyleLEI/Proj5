@@ -121,7 +121,6 @@ void DataManager::modifyStudent(){
     }
     stuptr->setName(in_name);
     
-    
 year:
     cout<<"Enter the student year (if no change, just press ENTER) ["<<stuptr->getYear()<<"]: ";
     int in_year;

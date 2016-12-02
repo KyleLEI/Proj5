@@ -27,5 +27,6 @@ The most tricky part is the registration management. That is, the addition and d
 ——————
 Notice
 ——————
+* A sample database “dat” has been provided for grader to load
 * The sample executable outputs an HTML file with two “<HEAD>”, which is fixed in my program
 * The university has updated its programs to 4 year, even 5 year for DDP, and course code to 4-digit. Therefore in my program the year limit has been set to 4 and course code 4-digit

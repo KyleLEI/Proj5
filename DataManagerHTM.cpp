@@ -88,7 +88,7 @@ void DataManager::htmAllStudents(){
             fout<<"<TD>"<<stuptr->getID()<<"</TD>\n"
             <<"<TD>"<<stuptr->getName()<<"</TD>\n"
             <<"<TD>"<<stuptr->getYear()<<"</TD>\n"
-            <<"<TD>"<<strGender(stuptr->getGender())<<"</TD>\n\n";
+            <<"<TD>"<<strGender(stuptr->getGender())<<"</TD>\n</TR>\n\n";
         }
         addHTMLEnd(fout,true);
         delete []students;
@@ -205,8 +205,7 @@ void DataManager::htmCourseOfStudent(){
             fout<<"<TD>"<<regToAdd->getCourse()->getCode()<<"</TD>\n"
             <<"<TD>"<<regToAdd->getCourse()->getName()<<"</TD>\n"
             <<"<TD>"<<regToAdd->getCourse()->getCredit()<<"</TD>\n";
-            if(regToAdd->isGradeAvailable())
-                fout<<"<TD>"<<regToAdd->getMark()<<"</TD>\n\n";
+            if(regToAdd->isGradeAvailable()) fout<<"<TD>"<<regToAdd->getMark()<<"</TD>\n</TR>\n\n";
             else fout<<"<TD>N/A</TD>\n\n";
         }
         addHTMLEnd(fout, true);
@@ -278,8 +277,8 @@ void DataManager::htmStudentOfCourse(){
             <<"<TD>"<<regToAdd->getStudent()->getYear()<<"</TD>\n"
             <<"<TD>"<<strGender(regToAdd->getStudent()->getGender())<<"</TD>\n";
             if(regToAdd->isGradeAvailable())
-                fout<<"<TD>"<<regToAdd->getMark()<<"</TD>\n\n";
-            else fout<<"<TD>N/A</TD>\n\n";
+                fout<<"<TD>"<<regToAdd->getMark()<<"</TD>\n</TR>\n\n";
+            else fout<<"<TD>N/A</TD>\n</TR>\n\n";
         }
         addHTMLEnd(fout, true);
         delete []regs;

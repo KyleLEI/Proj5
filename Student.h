@@ -41,7 +41,7 @@ public:
     bool operator>(const Student& other){return this->ID>other.ID;}
     friend bool operator<(const Student& s1,const Student& s2){return s1.ID<s2.ID;}//overloaded for sort
     bool operator==(const Student& other){return this->ID==other.ID;}
-    Student& operator=(const Student&);
+    Student& operator=(const Student&);//overloaded for report generation
 private:
     Gender gender;
 };

@@ -8,7 +8,6 @@
 
 #include "DataManager.h"
 #include <cstdlib>
-#include <cstdio>
 #include <iostream>
 using namespace std;
 
@@ -124,9 +123,8 @@ bool DataManager::readInput(int& container){
     cin.get(c);
     if(c=='\n') return true;
     tmp.push_back(c);
-    while(cin.get(c)&&c!='\n') tmp.push_back(c);
-    const char* ctmp=tmp.c_str();
-    sscanf(ctmp, "%d",&container);
+    while(cin.get(c),c!='\n') tmp.push_back(c);
+    container=atoi(tmp.c_str());
     return false;
 }
 
@@ -137,7 +135,7 @@ bool DataManager::readInput(double& container){
     cin.get(c);
     if(c=='\n') return true;
     tmp.push_back(c);
-    while(cin.get(c)&&c!='\n') tmp.push_back(c);
+    while(cin.get(c),c!='\n') tmp.push_back(c);
     const char* ctmp=tmp.c_str();
     sscanf(ctmp, "%lf",&container);
     return false;
@@ -192,27 +190,32 @@ void DataManager::loadStudent(ifstream& fin){
         if(c==char(29)) break;
         container.push_back(c);
         
-        while(fin.get(c)&&c!=char(31)){
+        while(fin.get(c),c!=char(31)){
             container.push_back(c);
         }
         string in_ID=container;
         container.clear();
         
-        if(stuTable.queryStudent(in_ID)) continue;
+        if(stuTable.queryStudent(in_ID)){
+            while(fin.get(c),c!=char(31)){}
+            while(fin.get(c),c!=char(31)){}
+            while(fin.get(c),c!=char(30)){}
+            continue;
+        }
         
-        while(fin.get(c)&&c!=char(31)){
+        while(fin.get(c),c!=char(31)){
             container.push_back(c);
         }
         string in_name=container;
         container.clear();
         
-        while(fin.get(c)&&c!=char(31)){
+        while(fin.get(c),c!=char(31)){
             container.push_back(c);
         }
         int in_year=atoi(container.c_str());
         container.clear();
 
-        while(fin.get(c)&&c!=char(30)){
+        while(fin.get(c),c!=char(30)){
             container.push_back(c);
         }
         int in_gender=atoi(container.c_str());
@@ -234,21 +237,25 @@ void DataManager::loadCourse(ifstream& fin){
         if(c==char(29)) break;
         container.push_back(c);
         
-        while(fin.get(c)&&c!=char(31)){
+        while(fin.get(c),c!=char(31)){
             container.push_back(c);
         }
         string in_code=container;
         container.clear();
         
-        if(courseTable.queryCourse(in_code)) continue;
+        if(courseTable.queryCourse(in_code)){
+            while(fin.get(c),c!=char(31)){}
+            while(fin.get(c),c!=char(30)){}
+            continue;
+        }
         
-        while(fin.get(c)&&c!=char(31)){
+        while(fin.get(c),c!=char(31)){
             container.push_back(c);
         }
         string in_name=container;
         container.clear();
         
-        while(fin.get(c)&&c!=char(30)){
+        while(fin.get(c),c!=char(30)){
             container.push_back(c);
         }
         int in_cre=atoi(container.c_str());
@@ -267,22 +274,26 @@ void DataManager::loadReg(ifstream& fin){
         if(c==char(29)) break;
         container.push_back(c);
         
-        while(fin.get(c)&&c!=char(31)){
+        while(fin.get(c),c!=char(31)){
             container.push_back(c);
         }
         string in_ID=container;
         Student* stuptr=stuTable.findStudent(in_ID);
         container.clear();
         
-        while(fin.get(c)&&c!=char(31)){
+        while(fin.get(c),c!=char(31)){
             container.push_back(c);
         }
         string in_code=container;
         Course* courseptr=courseTable.findCourse(in_code);
         container.clear();
         
-        if(regTable.queryRegistration(in_ID, in_code)) continue;
-        while(fin.get(c)&&c!=char(31)){
+        if(regTable.queryRegistration(in_ID, in_code)){
+            while(fin.get(c),c!=char(31)){}
+            while(fin.get(c),c!=char(30)){}
+            continue;
+        }
+        while(fin.get(c),c!=char(31)){
             container.push_back(c);
         }
         bool isGrade;
@@ -290,7 +301,7 @@ void DataManager::loadReg(ifstream& fin){
         else isGrade=true;
         container.clear();
         
-        while(fin.get(c)&&c!=char(30)){
+        while(fin.get(c),c!=char(30)){
             container.push_back(c);
         }
         int mark=atoi(container.c_str());

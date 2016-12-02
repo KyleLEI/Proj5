@@ -29,7 +29,6 @@ public:
     SortedList<Registration*>* getEnrolledStudents() {return &ptrs;}
     bool removeLinkToReg(Registration* in_link){return ptrs.remove(in_link);}
     
-    void setCode(std::string in_code){code=in_code;}
     void setName(std::string in_name){name=in_name;}
     void setCredit(int in_cre){credit=in_cre;}
     
@@ -38,7 +37,7 @@ public:
     bool operator>(const Course& other){return this->code>other.code;}
     friend bool operator<(const Course& c1,const Course& c2){return c1.code<c2.code;}//overloaded for sort
     bool operator==(const Course& other){return this->code==other.code;}
-    Course& operator=(const Course&);
+    Course& operator=(const Course&);//overloaded for report generation
 };
 
 class CourseTable{

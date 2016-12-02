@@ -57,5 +57,6 @@ Course& Course::operator=(const Course& other){
     code=other.code;
     name=other.name;
     credit=other.credit;
+    //not copying registrations since when the assignment operator is called in HTML output, only code name and credit are needed.
     return *this;
 }
