@@ -85,6 +85,7 @@ private:
     void htmAllStudents();
     void htmAllCourses();
     void htmCourseOfStudent();
+    void htmStudentOfCourse();
 };
 
 #endif /* DataManager_h */

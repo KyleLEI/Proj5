@@ -44,7 +44,7 @@ void DataManager::displayHTMMenu(){
             break;
             
         case 4:
-            queryStudent();
+            htmStudentOfCourse();
             break;
             
         case 5:
@@ -181,7 +181,7 @@ void DataManager::htmCourseOfStudent(){
     title+="Course Records for Student: ";title+=stuptr->getName();
     title+=" (";title+=stuptr->getID();title+=")";
     SortedList<Registration*>* reg=stuptr->getEnrolledCourses();
-    int size=stuptr->getEnrolledCourses()->getSize();
+    int size=reg->getSize();
     if(size!=0){
         addHTMLStart(fout, title,true);
         //add table title
@@ -214,7 +214,79 @@ void DataManager::htmCourseOfStudent(){
     }
     else{
         addHTMLStart(fout, title, false);
-        fout<<"No enrolled course found\n";
+        fout<<"No course taken\n";
+        addHTMLEnd(fout, false);
+    }
+    
+    fout.close();
+    cout<<"Output successful\n"<<endl;
+    waitForEnter();
+}
+
+void DataManager::htmStudentOfCourse(){
+    cout<<"Enter the course code: ";
+    string in_code;
+    readInput(in_code);
+    while(!verifyCourseCode(in_code)){
+        cout<<"Invalid Input, please re-enter [course code]: ";
+        readInput(in_code);
+    }
+    Course* ptr=courseTable.findCourse(in_code);
+    if(ptr==NULL){
+        cout<<"Course does not exist\n"<<endl;
+        waitForEnter();
+        return;
+    }
+    
+    string filename;filename+=in_code;filename+=".html";
+    ofstream fout(filename);
+    if(!fout.is_open()){
+        cout<<"Error: Write File Error\n"<<endl;
+        waitForEnter();
+        return;
+    }
+    
+    string title;
+    title+="Student Records for Course: ";title+=ptr->getName();
+    title+=" (";title+=ptr->getCode();title+=")";
+    SortedList<Registration*>* reg=ptr->getEnrolledStudents();
+    int size=reg->getSize();
+    
+    if(size!=0){
+        addHTMLStart(fout, title,true);
+        //add table title
+        fout<<"<TR>\n"
+        <<"<TD>Student ID</TD>\n"
+        <<"<TD>Student Name</TD>\n"
+        <<"<TD>Year</TD>\n"
+        <<"<TD>Gender</TD>\n"
+        <<"<TD>Exam Mark</TD>\n"
+        <<"</TR>\n\n";
+        Registration* regs=new Registration[size];
+        int top=0;
+        for(int i=0;i<reg->getSize();++i){
+            regs[top]=*reg->operator[](i);
+            ++top;
+        }
+        sort(regs,regs+size);
+        
+        for(int i=0;i<size;++i){
+            Registration* regToAdd=regs+i;
+            fout<<"<TR>\n";
+            fout<<"<TD>"<<regToAdd->getStudent()->getID()<<"</TD>\n"
+            <<"<TD>"<<regToAdd->getStudent()->getName()<<"</TD>\n"
+            <<"<TD>"<<regToAdd->getStudent()->getYear()<<"</TD>\n"
+            <<"<TD>"<<strGender(regToAdd->getStudent()->getGender())<<"</TD>\n";
+            if(regToAdd->isGradeAvailable())
+                fout<<"<TD>"<<regToAdd->getMark()<<"</TD>\n\n";
+            else fout<<"<TD>N/A</TD>\n\n";
+        }
+        addHTMLEnd(fout, true);
+        delete []regs;
+    }
+    else{
+        addHTMLStart(fout, title, false);
+        fout<<"No student takes this course\n";
         addHTMLEnd(fout, false);
     }
     
