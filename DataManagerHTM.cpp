@@ -138,7 +138,7 @@ void DataManager::htmAllCourses(){
             fout<<"<TR>\n";
             fout<<"<TD>"<<ptr->getCode()<<"</TD>\n"
             <<"<TD>"<<ptr->getName()<<"</TD>\n"
-            <<"<TD>"<<ptr->getCredit()<<"</TD>\n\n";
+            <<"<TD>"<<ptr->getCredit()<<"</TD>\n</TR>\n\n";
         }
         addHTMLEnd(fout,true);
         delete []courses;
@@ -206,7 +206,7 @@ void DataManager::htmCourseOfStudent(){
             <<"<TD>"<<regToAdd->getCourse()->getName()<<"</TD>\n"
             <<"<TD>"<<regToAdd->getCourse()->getCredit()<<"</TD>\n";
             if(regToAdd->isGradeAvailable()) fout<<"<TD>"<<regToAdd->getMark()<<"</TD>\n</TR>\n\n";
-            else fout<<"<TD>N/A</TD>\n\n";
+            else fout<<"<TD>N/A</TD>\n</TR>\n\n";
         }
         addHTMLEnd(fout, true);
         delete []regs;
