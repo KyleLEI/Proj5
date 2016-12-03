@@ -32,7 +32,7 @@ public:
     void setName(std::string in_name){name=in_name;}
     void setCredit(int in_cre){credit=in_cre;}
     
-    void linkToReg(Registration* in_link){ptrs.insert(in_link);}
+    void linkToReg(Registration* in_link){ptrs.insertRaw(in_link);}
     
     bool operator>(const Course& other){return this->code>other.code;}
     friend bool operator<(const Course& c1,const Course& c2){return c1.code<c2.code;}//overloaded for sort
