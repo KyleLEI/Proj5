@@ -4,9 +4,9 @@ General Design
 ——————————————
 The registration database keeps record of students and courses information, as well as course enrollment information. It is also capable of outputting information stored in the form of HTML document and saving the entire database to a file.
 
-The overall design of the program is highly object-oriented with an extremely simple main and other objects finishing the tasks. No global variable or function is present, except for a simple macro definition in “DataManagerFile.cpp”, which can be removed if needs be.
+The overall design of the program is highly object-oriented with an extremely simple main function and other objects finishing the tasks. No global variable or function is present, all the data is kept within classes.
 
-Class inheritance is not adopted since the input datatypes vary significantly.
+Class inheritance is not adopted since the function names vary significantly.
 
 ——————————————
 Classes Design
@@ -29,5 +29,5 @@ The most tricky part is the registration management. That is, the addition and d
 Notice
 ——————
 * A sample database “dat” has been provided for grader to load
-* The sample executable outputs an HTML file with two “<HEAD>”, which is fixed in my program
+* The sample executable outputs an HTML file with two “<HEAD>”, which has been fixed in my program
 * The university has updated its programs to 4 year, even 5 year for DDP, and course code to 4-digit. Therefore in my program the year limit has been set to 4 and course code 4-digit

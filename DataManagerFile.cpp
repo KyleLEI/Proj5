@@ -58,7 +58,7 @@ void DataManager::saveDB(){
     }
     fout<<secretSequence<<"\n";//add a secret sequence to indicate file type
     saveStudent(fout, stuTable.getTable());
-    fout<<char(29);
+    fout<<char(29);//add separator
     saveCourse(fout, courseTable.getTable());
     fout<<char(29);
     saveReg(fout, regTable.getTable());
@@ -85,7 +85,7 @@ void DataManager::loadDB(){
     
     string sequence;
     fin>>sequence;
-    if(sequence!=secretSequence){//verify the secret sequence, if match, the file type is correct
+    if(sequence!=secretSequence){//verify the secret sequence, if not match, the file type is wrong
         cout<<"Error: Load File Error (Incorrect Format)\n"<<endl;
         waitForEnter();
         return;
@@ -142,9 +142,7 @@ void DataManager::loadStudent(ifstream& fin){
         string in_ID=container;
         container.clear();
         
-        if(stuTable.queryStudent(in_ID)){
-            while(fin.get(c),c!=char(31)){}
-            while(fin.get(c),c!=char(31)){}
+        if(stuTable.queryStudent(in_ID)){//if student already loaded, skip this record
             while(fin.get(c),c!=char(30)){}
             continue;
         }
@@ -189,8 +187,7 @@ void DataManager::loadCourse(ifstream& fin){
         string in_code=container;
         container.clear();
         
-        if(courseTable.queryCourse(in_code)){
-            while(fin.get(c),c!=char(31)){}
+        if(courseTable.queryCourse(in_code)){//if course already loaded, skip this record
             while(fin.get(c),c!=char(30)){}
             continue;
         }
@@ -234,8 +231,7 @@ void DataManager::loadReg(ifstream& fin){
         Course* courseptr=courseTable.findCourse(in_code);
         container.clear();
         
-        if(regTable.queryRegistration(in_ID, in_code)){
-            while(fin.get(c),c!=char(31)){}
+        if(regTable.queryRegistration(in_ID, in_code)){//if reg already loaded, skip this record
             while(fin.get(c),c!=char(30)){}
             continue;
         }

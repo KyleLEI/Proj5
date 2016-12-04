@@ -112,7 +112,7 @@ bool DataManager::readInput(std::string& container){
     cin.get(c);
     if(c=='\n') return true;
     container.push_back(c);
-    while(cin.get(c)&&c!='\n') container.push_back(c);
+    while(cin.get(c),c!='\n') container.push_back(c);
     return false;
 }
 
@@ -136,8 +136,7 @@ bool DataManager::readInput(double& container){
     if(c=='\n') return true;
     tmp.push_back(c);
     while(cin.get(c),c!='\n') tmp.push_back(c);
-    const char* ctmp=tmp.c_str();
-    sscanf(ctmp, "%lf",&container);
+    container=atof(tmp.c_str());
     return false;
 }
 
@@ -154,7 +153,7 @@ void DataManager::displayMainMenu(){
     <<"Enter your choice (1-6): ";
 }
 
-void DataManager::addHTMLStart(ofstream& fout, const string& title, bool has_table){
+void DataManager::addHTMLStart(ofstream& fout, const string& title, const bool has_table){
     fout<<"<HTML>\n"
     <<"<HEAD>\n"
     <<"<TITLE>"<<title<<"</TITLE>\n"
@@ -166,7 +165,7 @@ void DataManager::addHTMLStart(ofstream& fout, const string& title, bool has_tab
     if(has_table)fout<<"<TABLE cellSpacing=1 cellPadding=1 border=1>\n\n";
 }
 
-void DataManager::addHTMLEnd(ofstream& fout,bool has_table){
+void DataManager::addHTMLEnd(ofstream& fout, const bool has_table){
     if(has_table)fout<<"</TABLE>\n";
     fout<<"</P>\n"
     <<"</BODY>\n"

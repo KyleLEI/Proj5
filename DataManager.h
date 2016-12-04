@@ -19,6 +19,7 @@ class DataManager{
 public:
     DataManager(){};
     int exec();
+    
 private:
     static void displayMainMenu();
     void displayStudentMenu();
@@ -79,8 +80,8 @@ private:
     void loadReg(std::ifstream&);
     
     /*------HTML output functions------*/
-    static void addHTMLStart(std::ofstream&,const std::string&,bool);
-    static void addHTMLEnd(std::ofstream&,bool);
+    static void addHTMLStart(std::ofstream&,const std::string&,const bool);
+    static void addHTMLEnd(std::ofstream&,const bool);
     
     void htmAllStudents();
     void htmAllCourses();

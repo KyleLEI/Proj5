@@ -122,7 +122,7 @@ void DataManager::htmAllCourses(){
         <<"<TD>Credit</TD>\n"
         <<"</TR>\n\n";
         
-        //add courses' info
+        //sort courses
         Course* courses=new Course[size];
         int top=0;
         for(int i=0;i<courseTable.getBucketNum();++i){

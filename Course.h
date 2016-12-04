@@ -42,7 +42,7 @@ public:
 
 class CourseTable{
     enum{b=36,m=17};
-    SortedList<Course> table[m];
+    SortedList<Course> table[m];//array of linked list for hashing
 public:
     CourseTable(){};
     void addCourse(const Course&);

@@ -95,7 +95,7 @@ T* SortedList<T>::insert(const T& input){
         node=node->next;
     }
     //if larger than all existing nodes, insert at tail
-    tail->next=newNode;
+    tail->next=newNode;//since the list is initialized, tail must be present
     //maintain the property of a linked list
     newNode->prev=tail;
     newNode->next=head;
@@ -109,7 +109,7 @@ T* SortedList<T>::insertRaw(const T& input){
     ++size;
     if(head==NULL){initialize(input); return &head->content;}
     Node<T>* newNode=new Node<T>(input);
-    tail->next=newNode;
+    tail->next=newNode;//since the list is initialized, tail must be present
     newNode->prev=tail;
     newNode->next=head;
     tail=newNode;
@@ -127,7 +127,7 @@ void SortedList<T>::insertFront(Node<T>* toBeInserted, Node<T>* node){
         toBeInserted->prev=oldprev;
         node->prev=toBeInserted;
         toBeInserted->next=node;
-    }else{
+    }else{//insert as a new head
         node->prev=toBeInserted;
         toBeInserted->next=node;
         head=toBeInserted;
