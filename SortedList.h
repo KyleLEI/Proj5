@@ -92,6 +92,7 @@ T* SortedList<T>::insert(const T& input){
             insertFront(newNode, node);
             return &newNode->content;
         }
+        node=node->next;
     }
     //if larger than all existing nodes, insert at tail
     tail->next=newNode;
@@ -99,6 +100,7 @@ T* SortedList<T>::insert(const T& input){
     newNode->prev=tail;
     newNode->next=head;
     tail=newNode;
+    head->prev=tail;
     return &newNode->content;
 }
 
@@ -111,12 +113,13 @@ T* SortedList<T>::insertRaw(const T& input){
     newNode->prev=tail;
     newNode->next=head;
     tail=newNode;
+    head->prev=tail;
     return &newNode->content;
 }
 
 template<typename T>
 void SortedList<T>::insertFront(Node<T>* toBeInserted, Node<T>* node){
-    if(node->prev!=NULL){
+    if(node!=head){//if is not inserted as a new head
         //point the next of the previous "previous" node to the node inserted
         Node<T>* oldprev=node->prev;
         oldprev->next=toBeInserted;
@@ -128,6 +131,7 @@ void SortedList<T>::insertFront(Node<T>* toBeInserted, Node<T>* node){
         node->prev=toBeInserted;
         toBeInserted->next=node;
         head=toBeInserted;
+        tail->next=head;
     }
 }
 

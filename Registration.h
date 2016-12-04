@@ -44,7 +44,7 @@ class RegistrationTable{
     SortedList<Registration> table;
 public:
     RegistrationTable(){};
-    Registration* addRegistration(const Registration& input){return table.insertRaw(input);};
+    Registration* addRegistration(const Registration& input){return table.insert(input);};
     Registration* findRegistration(const std::string stu_id, const std::string course_code);
     Node<Registration>* findRegistrationNode(const std::string stu_id, const std::string course_code);
     bool removeRegistration(const std::string stu_id, const std::string course_code);
